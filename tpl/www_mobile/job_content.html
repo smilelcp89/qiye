@@ -1,0 +1,28 @@
+<!-- include tpl=head title=$page_rs.title menutitle=$page_rs.title -->
+<div data-role="navbar">
+	<ul>
+		<!-- sublist pid=$page_rs.id -->
+		<!-- loop from=$list key=$key value=$value -->
+		<li><a href="{$value.url}">{$value.title}</a></li>
+		<!-- /loop -->
+		<li><a href="{$page_rs.url}" title="{$page_rs.title}" class="ui-btn-active">{$page_rs.title}</a></li>
+	</ul>
+</div>
+<div role="main" class="ui-content">
+	<div class="ui-body ui-body-a ui-corner-all" style="margin-top:5px;">
+		<h3>{$rs.title}</h3>
+		<p>查看次数：{$rs.hits}</p>
+		<p>发布时间：{func date Y-m-d $rs.dateline}</p>
+		<p>薪资范围：{$rs.price}</p>
+		<p>工作年限：{$rs.years}</p>
+		<p>学历要求：{$rs.schools}</p>
+		<p>工作地点：{$rs.address}</p>
+		<!-- if $rs.content -->
+		<hr />
+		<div class="content">{$rs.content}</div>
+		<!-- /if -->
+		<a href="{url ctrl=post id=apply tid=$rs.id/}" role="button" class="ui-shadow ui-btn ui-corner-all ui-btn-inline">我要应聘</a>
+	</div>
+</div>
+
+<!-- include tpl=foot -->

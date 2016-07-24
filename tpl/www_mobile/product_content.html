@@ -1,0 +1,60 @@
+<!-- include tpl=head title=$page_rs.title menutitle=$page_rs.title -->
+<div data-role="navbar">
+	<ul>
+		<!-- catelist pid=$page_rs.id -->
+		<!-- loop from=$list.sublist key=$key value=$value -->
+		<li><a href="{$value.url}"{if $cate_rs.id == $value.id} class="ui-btn-active"{/if}>{$value.title}</a></li>
+		<!-- /loop -->
+	</ul>
+</div>
+
+
+
+<div role="main" class="ui-content">
+	<div class="product_img" id="product_img">
+		<ul class="ul">
+			<!-- loop from=$rs.thumb key=$key value=$value -->
+			<li><img src="{#images#}/blank.gif" _src="{$value.gd.mobile}" border="0" alt="{$rs.title}" /></li>
+			<!-- /loop -->
+		</ul>
+	</div>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		TouchSlide({
+			slideCell:"#product_img",
+			mainCell:".ul", 
+			effect:"leftLoop",
+			autoPlay:true,
+			switchLoad:"_src"
+		});
+	});
+	</script>
+	<div class="ui-body ui-body-a ui-corner-all" style="margin-top:5px;">
+		<h3>{$rs.title}</h3>
+		<p>查看：{$rs.hits}</p>
+		<p>时间：{func date Y-m-d $rs.dateline}</p>
+		<!-- loop from=$rs.attrs key=$key value=$value id=$tmpid -->
+		<p>{$key}：{$value}</p>
+		<!-- /loop -->
+		<!-- if $rs.price && is_numeric($rs.price) -->
+		<p><span>价格：</span><span class="price">{$rs.price} 元</span></p>
+		<!-- elseif $rs.price -->
+		<p><span>价格：</span><span class="price">{$rs.price}</span></p>
+		<!-- /if -->
+		<a href="{url ctrl=post id=zxservice tid=$rs.id/}" role="button" class="ui-shadow ui-btn ui-corner-all ui-btn-inline">咨询订购</a>
+		<!-- include file=content -->
+		<div class="content">{$rs.content}</div>
+		<ul class="np">
+			<!-- php:$prev = phpok_prev($rs) -->
+			<!-- if $prev -->
+			<li><a href="{$prev.url}"><b>上一主题：</b>{$prev.title}</a></li>
+			<!-- /if -->
+			<!-- php:$next = phpok_next($rs) -->
+			<!-- if $next -->
+			<li><a href="{$next.url}"><b>下一主题：</b>{$next.title}</a></li>
+			<!-- /if -->
+		</ul>
+	</div>
+</div>
+
+<!-- include tpl=foot -->

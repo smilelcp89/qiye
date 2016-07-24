@@ -1,0 +1,44 @@
+<!-- include tpl=head title=站内搜索 menutitle=网站首页 -->
+<script type="text/javascript">
+function search_submit()
+{
+	var keywords = $("#keywords").val();
+	if(!keywords){
+		$.dialog.alert('请输入要搜索的关键字');
+		return false;
+	}
+	return true;
+}
+</script>
+<style type="text/css">
+input.search{width:500px;line-height:26px;}
+</style>
+<div class="banner"></div>
+<div class="main clearfix">
+	<div class="left">
+		<!-- include tpl=block_contact -->
+	</div>
+	<div class="right">
+		<div class="pfw">
+			<div class="title">
+				<h3>站内搜索</h3>
+				<span class="breadcrumbs">
+					您现在的位置：
+					<a href="{$sys.url}" title="{$config.title}">首页</a>
+					<span class="arrow">&gt;</span> <a href="{url ctrl=search/}" title="站内搜索">站内搜索</a>
+				</span>
+			</div>
+			<div class="detail">
+				<div class="content">
+					<form method="post" action="{url ctrl=search/}" onsubmit="return search_submit();">
+						<input name="keywords" class="search" id="keywords" type="text" placeholder="请输入关键字" />
+						<input type="submit" class="large button blue" value="搜索" />
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- include tpl=foot -->

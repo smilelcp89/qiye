@@ -1,0 +1,1 @@
+<?php exit();?>a:1:{s:3:"ext";a:1:{s:7:"content";s:67:"Powered By phpok.com 版权所有 © 2004-2014, All right reserved.";}}

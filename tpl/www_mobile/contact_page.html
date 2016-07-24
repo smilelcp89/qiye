@@ -1,0 +1,54 @@
+<!-- include tpl=head title=$page_rs.title menutitle=$page_rs.title -->
+<div data-role="navbar">
+	<ul>
+		<!-- arclist pid=$page_rs.id psize=9999 fields=id -->
+		<!-- loop from=$list.rslist key=$key value=$value -->
+		<li><a href="{$value.url}"{if $rs.id == $value.id} class="ui-btn-active"{/if}>{$value.title}</a></li>
+		<!-- /loop -->
+	</ul>
+</div>
+<div role="main" class="ui-content">
+	<div class="ui-body ui-body-a ui-corner-all">
+		<h3>{$page_rs.company}</h3>
+		<div class="content">
+			<p>联系人：{$page_rs.fullname}</p>
+			<p>联系电话：{$page_rs.tel}</p>
+			<p>联系邮箱：{$page_rs.email}</p>
+			<p>联系地址：{$page_rs.address}</p>
+		</div>
+	</div>
+	<!-- if $page_rs.address -->
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.1&services=true"></script>
+	<div class="ui-body ui-body-a ui-corner-all" style="margin-top:5px;" id="map_info">
+		<h3>在线地图</h3>
+		<div class="content">
+			<div id="allmap" style="width:100%;overflow:hidden;height:300px;"></div>
+		</div>
+		<script type="text/javascript">
+		var map = new BMap.Map("allmap");
+		var point = new BMap.Point(116.331398,39.897445);
+		map.centerAndZoom(point,12);
+		var myGeo = new BMap.Geocoder();
+		myGeo.getPoint("{$page_rs.address}", function(point){
+			if (point) {
+				map.centerAndZoom(point, 16);
+				map.addOverlay(new BMap.Marker(point));
+		        //向地图中添加缩放控件
+		        var ctrl_nav = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_LEFT, type: BMAP_NAVIGATION_CONTROL_LARGE});
+		        map.addControl(ctrl_nav);
+		        //向地图中添加缩略图控件
+		        var ctrl_ove = new BMap.OverviewMapControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT, isOpen: 1});
+		        map.addControl(ctrl_ove);
+		        //向地图中添加比例尺控件
+		        var ctrl_sca = new BMap.ScaleControl({anchor: BMAP_ANCHOR_BOTTOM_LEFT});
+		        map.addControl(ctrl_sca);
+			}else{
+				$("#map_info").hide();
+			}
+		}, "{func phpok_cut $page_rs.address 2}");
+		</script>
+	</div>
+	<!-- /if -->
+</div>
+
+<!-- include tpl=foot -->

@@ -1,0 +1,36 @@
+<!-- php:$title = $page_rs.title.' - '.$parent_rs.title -->
+<!-- include tpl=head title=$title menutitle=$parent_rs.title -->
+<div class="banner"{if $parent_rs.banner} style="background-image:url('{$parent_rs.banner.gd.auto}')"{/if}></div>
+<div class="main clearfix">
+	<div class="left">
+		<div class="pfw">
+			<div class="title"><h3>{$parent_rs.title}</h3></div>
+			<ul class="artlist">
+				<!-- sublist pid=$parent_rs.id -->
+				<!-- loop from=$list key=$key value=$value id=$tmpid -->
+				<li{if $value.id == $page_rs.id} class="current"{/if}><a href="{$value.url}" title="{$value.title}">{$value.title}</a></li>
+				<!-- /loop -->
+				<li><a href="{$parent_rs.url}" title="{$parent_rs.title}">{$parent_rs.title}</a></li>
+			</ul>
+		</div>
+		<!-- include tpl=block_contact -->
+	</div>
+	<div class="right">
+		<div class="pfw">
+			<div class="title">
+				<h3>{$page_rs.title}</h3>
+				<span class="breadcrumbs">
+					您现在的位置：
+					<a href="{$sys.url}" title="{$config.title}">首页</a>
+					<span class="arrow">&gt;</span> <a href="{$parent_rs.url}" title="{$parent_rs.title}">{$parent_rs.title}</a>
+					<span class="arrow">&gt;</span> <a href="{$page_rs.url}" title="{$page_rs.title}">{$page_rs.title}</a>
+				</span>
+			</div>
+			<div class="detail" style="background:#fff;">
+				<div class="content">{$page_rs.content}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- include tpl=foot -->

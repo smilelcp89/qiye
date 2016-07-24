@@ -1,0 +1,103 @@
+<!-- include tpl=head menutitle=网站首页 -->
+<!-- php:$list = phpok('picplayer') -->
+<!-- if $list.total -->
+<div class="indexbanner"{if $list.project.height} style="height:{$list.project.height}px;"{/if}>
+	<div class="bd">
+	<ul>
+		<!-- loop from=$list.rslist key=$key value=$value -->
+		<li><a href="{$value.link}" target="{$value.target}" title="{$value.title}"><img src="{#images#}/blank.gif" _src="{$value.banner.filename}" width="980" alt="{$value.title}"{if $list.project.height} style="height:{$list.project.height}px;"{/if} /></a></li>
+		<!-- /loop -->
+	</ul>
+	</div>
+	<div class="hd">
+	<ul>
+		<!-- loop from=$list.rslist key=$key value=$value id=tmpid -->
+		<li></li>
+		<!-- /loop -->
+	</ul>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".indexbanner").slide({'autoPlay':true,'switchLoad':'_src','mainCell':'.bd ul'});
+});
+</script>
+<!-- /if -->
+<div class="main index clearfix">
+	<div class="left">
+		
+		<!-- php:$list = phpok('news') -->
+		<div class="pfw">
+			<div class="title"><h3>{$list.project.title}</h3><a class="more" href="{$list.project.url}">更多</a></div>
+			<ul class="artlist">
+				<!-- loop from=$list.rslist key=$key value=$value -->
+				<li><a href="{$value.url}" title="{$value.title}">{func phpok_cut $value.title 15 …}</a><!-- if $value.dateline + 24 * 3600 > $sys.time --> <img src="images/new.gif" /><!-- /if --></li>
+				<!-- /loop -->
+			</ul>
+		</div>
+	</div>
+	<div class="middle">
+		<!-- php:$list = phpok('photo') -->
+		<div class="pfw">
+			<div class="title"><h3>{$list.project.title}</h3><a class="more" href="{$list.project.url}">更多</a></div>
+			<ul class="piclist">
+				<!-- loop from=$list.rslist key=$key value=$value id=$tmpid -->
+				<li{if $tmpid.num%3 == ''} class="last"{/if}>
+					<div class="pic"><img src="{$value.thumb.gd.thumb}" width="120" /></div>
+					<div class="txt">{$value.title}</div>
+				</li>
+				<!-- /loop -->
+			</ul>
+		</div>
+	</div>
+	<div class="right">
+		<!-- php:$arc = phpok('about') -->
+		<div class="pfw clearfix">
+			<div class="title"><h3>{$arc.title}</h3><a class="more" href="{$arc.url}">更多</a></div>
+			<div class="about"><!-- if $arc.thumb --><img src="{$arc.thumb.gd.thumb}" border="0" align="left" style="margin-right:10px;width:80px;" /><!-- /if -->{$arc.note}</div>
+		</div>
+		<!-- php:$contact = phpok('contact') -->
+		<div class="pfw clearfix">
+			<div class="title"><h3>{$contact.title}</h3><a class="more" href="{$contact.url}">更多</a></div>
+			<div class="about">
+				<div>公司：{$contact.company}</div>
+				<div>联系人：{$contact.fullname}</div>
+				<div>地址：{$contact.address}</div>
+				<div>电话：{$contact.tel}</div>
+			</div>
+		</div>
+	</div>
+	<div class='clear'></div>
+	<!-- php:$list = phpok('product') -->
+	<div class="pfw">
+		<div class="title"><h3>{$list.project.title}</h3><a class="more" href="{$list.project.url}">更多</a></div>
+		<ul class="product clearfix">
+			<!-- loop from=$list.rslist key=$key value=$value id=$tmpid -->
+			<!-- php:$thumb = current($value.thumb) -->
+			<li>
+				<div class="img"><a href="{$value.url}" title="{$value.title}"><img src="{$thumb.gd.thumb}" border="0" id="product_{$value.id}" /></a></div>
+				<div class="imglist clearfix">
+					<!-- loop from=$value.thumb key=$k value=$v id=$tmpid2 -->
+					<div class="thumb{if !$tmpid2.index} hover{/if}" data="{$v.gd.thumb}" data-id="{$value.id}"><img src="{$v.ico}" border="0" /></div>
+					<!-- /loop -->
+				</div>
+				<h4><a href="{$value.url}" title="{$value.title}">{$value.title}</a></h4>
+			</li>
+			<!-- /loop -->
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".thumb").mouseover(function(){
+		var pid = $(this).attr('data-id');
+		var thumb = $(this).attr('data');
+		$("#product_"+pid).attr("src",thumb);
+		$(".thumb[data-id="+pid+"]").removeClass("hover");
+		$(this).addClass('hover');
+	});
+});
+</script>
+
+
+<!-- include tpl=foot -->

@@ -1,0 +1,26 @@
+<!-- php:$title = $rs.title.' - '.$page_rs.title -->
+<!-- include tpl=head title=$title menutitle=$page_rs.title -->
+<div class="banner"{if $page_rs.banner} style="background-image:url('{$page_rs.banner.gd.auto}')"{/if}></div>
+<div class="main clearfix">
+	<div class="left">
+		<!-- include tpl=block_rslist -->
+		<!-- include tpl=block_contact -->
+	</div>
+	<div class="right">
+		<div class="pfw">
+			<div class="title">
+				<h3>{$rs.title}</h3>
+				<span class="breadcrumbs">
+					您现在的位置：
+					<a href="{$sys.url}" title="{$config.title}">首页</a>
+					<span class="arrow">&gt;</span> <a href="{$rs.url}" title="{$rs.title}">{$rs.title}</a>
+				</span>
+			</div>
+			<div class="detail">
+				<div class="content">{$rs.content}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- include tpl=foot -->

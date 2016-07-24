@@ -1,0 +1,13 @@
+<!-- head css="css/style.css" title=下载文件 -->
+<!-- php:$link = $app->url('download','','id='.$rs.dfile.id.'&title='.rawurlencode($rs.title)) -->
+<body>
+<div class="body">
+	<div class="download">
+		<div class="title">请点击按钮下载文件：<span class="red">{$rs.title}</span></div>
+		<input type="button" value="点击下载" onclick="$.phpok.go('{$link}')" class="large button blue" />
+		&nbsp; &nbsp;
+		<input type="button" value="取消返回" onclick="$.phpok.go('{$page_rs.url}')" class="large button red" />
+	</div>
+</div>
+</body>
+</html>

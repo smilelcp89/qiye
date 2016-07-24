@@ -1,0 +1,130 @@
+<!-- php:$title = $rs.title.' - '.$cate_rs.title.' - '.$page_rs.title -->
+<!-- include tpl=head title=$title menutitle=$page_rs.title -->
+<script type="text/javascript">
+function apply_it()
+{
+	$.dialog({
+		'title':"申请职位",
+		'lock':true,
+		'drag':false,
+		'content':document.getElementById('zxform'),
+		'fixed':true
+	});
+}
+$(document).ready(function(){
+	$("#postform").submit(function(){
+		if(!$("#fullname").val()){
+			$.dialog.alert('请填写您的姓名');
+			return false;
+		}
+		if(!$("#mobile").val()){
+			$.dialog.alert('请留下您的手机号');
+			return false;
+		}
+		if(!$("#email").val()){
+			$.dialog.alert('请填写Email信息，用于接受应聘通知');
+			return false;
+		}
+		$(this).ajaxSubmit({
+			'url':api_url('post','save'),
+			'type':'post',
+			'dataType':'json',
+			'success':function(rs){
+				if(rs.status == 'ok'){
+					$.dialog.alert('感觉您提交的应聘信息，我们会尽快与您取得联系',function(){
+						$.phpok.reload();
+					},'succeed');
+				}else{
+					$.dialog.alert(rs.content);
+					return false;
+				}
+			}
+		});
+		return false;
+	});
+});
+
+</script>
+<div class="banner"{if $page_rs.banner} style="background-image:url('{$page_rs.banner.gd.auto}')"{/if}></div>
+<div id="zxform" style="display:none;">
+	<form method="post" class="form" id="postform">
+	<input type="hidden" name="id" value="apply" />
+	<!-- php:$list = phpok('applied-online') -->
+	<div class="table">
+		<div class="l">岗位：</div>
+		<div class="r"><input type="text" name="title" id="title" value="{$rs.title}" class="input noborder red" readonly /></div>
+	</div>
+	<!-- loop from=$list key=$key value=$value id=$tmpid -->
+	<div class="table" id="form_{$value.identifier}">
+		<div class="l">{$value.title}：</div>
+		<div class="r">{$value.html}</div>
+	</div>
+	<!-- /loop -->
+	<!-- if $sys.is_vcode && function_exists('imagecreate') -->
+	<div class="table" id="form_{$value.identifier}">
+		<div class="l">验证码：</div>
+		<div class="r">
+			<input class="vcode"  type="text" name="_chkcode" id="_chkcode" />
+			<img src="" border="0" align="absmiddle" id="vcode" class="hand" />
+		</div>
+	</div>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#vcode").phpok_vcode();
+		$("#vcode").click(function(){
+			$(this).phpok_vcode();
+		});
+	});
+	</script>
+	<!-- /if -->
+	<div class="table">
+		<div class="l">&nbsp;</div>
+		<div class="r"><input type="submit" value="申请岗位" class="large button blue" /></div>
+	</div>
+	</form>
+</div>
+<div class="main clearfix">
+	<div class="left">
+		<div class="pfw">
+			<div class="title"><h3>{$page_rs.title}</h3></div>
+			<ul class="artlist">
+				<!-- sublist pid=$page_rs.id -->
+				<!-- loop from=$list key=$key value=$value id=$tmpid -->
+				<li><a href="{$value.url}" title="{$value.title}">{$value.title}</a></li>
+				<!-- /loop -->
+				<li class="current"><a href="{$page_rs.url}" title="{$page_rs.title}">{$page_rs.title}</a></li>
+			</ul>
+		</div>
+		<!-- include tpl=block_contact -->
+	</div>
+	<div class="right">
+		<div class="pfw">
+			<div class="title">
+				<h3>{$rs.title}</h3>
+				<span class="breadcrumbs">
+					您现在的位置：
+					<a href="{$sys.url}" title="{$config.title}">首页</a>
+					<span class="arrow">&gt;</span> <a href="{$page_rs.url}" title="{$page_rs.title}">{$page_rs.title}</a>
+				</span>
+			</div>
+			<div class="job">
+				<ul class="list clearfix">
+					<li><b>添加时间</b>：{func date Y-m-d $rs.dateline}</li>
+					<li><b>查看次数</b>：{$rs.hits}</li>
+					<li><b>申请人数</b>：{$rs.persons}</li>
+					<li><b>薪资范围</b>：{$rs.price}</li>
+					<li><b>工作年限</b>：{$rs.years}</li>
+					<li><b>学历</b>：{$rs.schools}</li>
+					<li><b>工作地点</b>：{$rs.address}</li>
+					<li><input type="button" value="我要应聘" onclick="apply_it()" class="red button" /></li>
+				</ul>
+			</div>
+
+			<div class="detail">
+				<div class="content">{$rs.content}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- include tpl=foot -->

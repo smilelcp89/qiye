@@ -1,0 +1,52 @@
+<!-- php:$title = $cate_rs ? $cate_rs.title.' - '.$page_rs.title : $page_rs.title -->
+<!-- include tpl=head title=$title menutitle=$page_rs.title -->
+<div class="banner"{if $page_rs.banner} style="background-image:url('{$page_rs.banner.gd.auto}')"{/if}></div>
+
+<div class="main clearfix">
+	<div class="left">
+		<!-- include tpl=block_catelist -->
+		<!-- include tpl=block_contact -->
+	</div>
+	<div class="right">
+		<div class="pfw">
+			<div class="title">
+				<h3>{$cate_rs ? $cate_rs.title : $page_rs.title}</h3>
+				<span class="breadcrumbs">
+					您现在的位置：
+					<a href="{$sys.url}" title="{$config.title}">首页</a>
+					<span class="arrow">&gt;</span> <a href="{$page_rs.url}" title="{$page_rs.title}">{$page_rs.title}</a>
+					<!-- if $cate_rs -->
+					<span class="arrow">&gt;</span> <a href="{$cate_rs.url}" title="{$cate_rs.title}">{$cate_rs.title}</a>
+					<!-- /if -->
+				</span>
+			</div>
+			<ul class="product clearfix" style="padding-left:7px;">
+				<!-- loop from=$rslist key=$key value=$value id=$tmpid -->
+				<!-- php:$thumb = current($value.thumb) -->
+				<li>
+					<div class="img"><a href="{$value.url}" title="{$value.title}"><img src="{$thumb.gd.thumb}" border="0" id="product_{$value.id}" /></a></div>
+					<div class="imglist clearfix">
+						<!-- loop from=$value.thumb key=$k value=$v id=$tmpid2 -->
+						<div class="thumb{if !$tmpid2.index} hover{/if}" data="{$v.gd.thumb}" data-id="{$value.id}"><img src="{$v.ico}" border="0" /></div>
+						<!-- /loop -->
+					</div>
+					<h4><a href="{$value.url}" title="{$value.title}">{$value.title}</a></h4>
+				</li>
+				<!-- /loop -->
+			</ul>
+		</div>
+		<!-- include tpl=block_pagelist -->
+	</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".thumb").mouseover(function(){
+		var pid = $(this).attr('data-id');
+		var thumb = $(this).attr('data');
+		$("#product_"+pid).attr("src",thumb);
+		$(".thumb[data-id="+pid+"]").removeClass("hover");
+		$(this).addClass('hover');
+	});
+});
+</script>
+<!-- include tpl=foot -->

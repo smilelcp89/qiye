@@ -1,0 +1,29 @@
+<!-- include tpl=head title=$page_rs.title menutitle=$page_rs.title -->
+<div data-role="navbar">
+	<ul>
+		<!-- sublist pid=$page_rs.id -->
+		<!-- loop from=$list key=$key value=$value -->
+		<li><a href="{$value.url}">{$value.title}</a></li>
+		<!-- /loop -->
+		<li><a href="{$page_rs.url}" title="{$page_rs.title}" class="ui-btn-active">{$page_rs.title}</a></li>
+	</ul>
+</div>
+
+<div role="main" class="ui-content">
+	<ul data-role="listview" data-inset="true" class="joblist" style="margin:0;">
+		<!-- loop from=$rslist key=$key value=$value -->
+		<li><a href="{$value.url}">
+		    <h3>岗位：{$value.title}</h3>
+		    <p>薪资范围：{$value.price}</p>
+			<p>工作年限：{$value.years}</p>
+			<p>学历：{$value.schools}</p>
+			<p>工作地点：{$value.address}</p>
+			<p>发布时间：{func time_format $value.dateline}</p></a>
+		    <p class="ui-li-aside ui-li-count">{$value.persons}</p>
+	    </li>
+	    <!-- /loop -->
+	</ul>
+	<!-- include tpl=pagelist -->
+</div>
+
+<!-- include tpl=foot -->

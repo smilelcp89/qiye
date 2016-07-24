@@ -1,0 +1,91 @@
+<!-- include tpl=head title=$page_rs.title -->
+<!-- include file=post -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#postsave").submit(function(){
+		if(!$("#fullname").val()){
+			layer.open({
+			    content: '请填写您的姓名',
+			    btn: ['确定']
+			});
+			return false;
+		}
+		if(!$("#mobile").val()){
+			layer.open({
+			    content: '请留下您的手机号',
+			    btn: ['确定']
+			});
+			return false;
+		}
+		if(!$("#note").val()){
+			layer.open({
+			    content: '请填写您要咨询的内容',
+			    btn: ['确定']
+			});
+			return false;
+		}
+		$(this).ajaxSubmit({
+			'url':api_url('post','save'),
+			'type':'post',
+			'dataType':'json',
+			'success':function(rs){
+				if(rs.status == 'ok'){
+					layer.open({
+					    content: '感觉您提交的咨询服务<br />我们客服会尽快与您取得联系',
+					    btn: ['确定'],
+					    shadeClose:false,
+					    yes:function(){
+						    var backurl = '{$rs ? $rs.url : $_back}';
+							$.phpok.go(backurl);
+					    }
+					});
+				}else{
+					layer.open({
+					    content: rs.content,
+					    btn: ['确定']
+					});
+					return false;
+				}
+			}
+		});
+		return false;
+	});
+});
+</script>
+<div role="main" class="ui-content">
+	<form method="post" id="postsave" onsubmit="return false">
+		<input type="hidden" name="id" value="{$page_rs.identifier}" />
+		<!-- if $rs -->
+		<input type="hidden" name="title" id="title" value="{$rs.title}" />
+		<label>咨询主题：<input type="text" disabled="disabled" value="{$rs.title}"></label>
+		<!-- else -->
+		<label>咨询主题：<input type="text" name="title" id="title" value=""></label>
+		<!-- /if -->
+		<!-- loop from=$extlist key=$key value=$value id=$tmpid -->
+		<label{if $value.identifier == 'furl'} style="display:none"{/if}>{$value.title}：{$value.html}</label>
+		<!-- /loop -->
+		<!-- if $sys.is_vcode && function_exists('imagecreate') -->
+		<label>验证码：
+			<input class="vcode"  type="text" name="_chkcode" id="_chkcode" />
+			<img src="" border="0" align="absmiddle" id="vcode" />
+		</label>
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$("#vcode").phpok_vcode();
+			$("#vcode").click(function(){
+				$(this).phpok_vcode();
+			});
+		});
+		</script>
+		<!-- /if -->
+		<input type="submit" value="提交" data-theme="b" />
+	</form>
+</div>
+<!-- if $rs -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#furl").val('{$sys.url}{$rs.url}');
+});
+</script>
+<!-- /if -->
+<!-- include tpl=foot -->

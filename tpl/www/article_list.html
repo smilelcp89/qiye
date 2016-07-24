@@ -1,0 +1,42 @@
+<!-- php:$title = $cate_rs ? $cate_rs.title.' - '.$page_rs.title : $page_rs.title -->
+<!-- include tpl=head title=$title menutitle=$page_rs.title -->
+<div class="banner"{if $page_rs.banner} style="background-image:url('{$page_rs.banner.gd.auto}')"{/if}></div>
+<div class="main clearfix">
+	<div class="left">
+		<!-- include tpl=block_catelist -->
+		<!-- include tpl=block_contact -->
+	</div>
+	<div class="right">
+		<div class="pfw">
+			<div class="title">
+				<h3>{$cate_rs ? $cate_rs.title : $page_rs.title}</h3>
+				<span class="breadcrumbs">
+					您现在的位置：
+					<a href="{$sys.url}" title="{$config.title}">首页</a>
+					<span class="arrow">&gt;</span> <a href="{$page_rs.url}" title="{$page_rs.title}">{$page_rs.title}</a>
+					<!-- if $cate_rs -->
+					<span class="arrow">&gt;</span> <a href="{$cate_rs.url}" title="{$cate_rs.title}">{$cate_rs.title}</a>
+					<!-- /if -->
+				</span>
+			</div>
+			<ul class="news_list">
+				<!-- loop from=$rslist key=$key value=$value -->
+				<li>
+					<!-- if $value.thumb -->
+					<span class="n-img"><a href="{$value.url}" title="{$value.title}"><img src="{$value.thumb.gd.thumb}" alt="{$value.title}" /></a></span>
+					<!-- /if -->
+					<h3><a href="{$value.url}" title="{$value.title}">{$value.title}</a></h3>
+					<div class="n-txt">
+						{$value.note ? phpok_cut($value.note,225,'…') : phpok_cut($value.content,225,'…')}
+						<span class="more">[<a href="{$value.url}" title="查看{$value.title}详细信息">查看更多</a>]</span>
+					</div>
+				</li>
+				<!-- /loop -->
+			</ul>
+			<!-- include tpl=block_pagelist -->
+		</div>
+	</div>
+</div>
+
+
+<!-- include tpl=foot -->

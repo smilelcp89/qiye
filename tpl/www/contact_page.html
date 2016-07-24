@@ -1,0 +1,24 @@
+<!-- include tpl=head title=$page_rs.title menutitle=$page_rs.title -->
+<div class="banner"{if $page_rs.banner} style="background-image:url('{$page_rs.banner.gd.auto}')"{/if}></div>
+<div class="main clearfix">
+	<div class="left">
+		<!-- include tpl=block_contact -->
+	</div>
+	<div class="right">
+		<div class="pfw">
+			<div class="title">
+				<h3>{$page_rs.title}</h3>
+				<span class="breadcrumbs">
+					您现在的位置：
+					<a href="{$sys.url}" title="{$config.title}">首页</a>
+					<span class="arrow">&gt;</span> <a href="{$page_rs.url}" title="{$page_rs.title}">{$page_rs.title}</a>
+				</span>
+			</div>
+			<div class="detail">
+				<div class="content" style="margin:0;">{$page_rs.content}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- include tpl=foot -->

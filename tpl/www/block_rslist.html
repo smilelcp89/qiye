@@ -1,0 +1,9 @@
+<div class="pfw">
+	<div class="title"><h3>{$page_rs.title}</h3></div>
+	<ul class="artlist">
+		<!-- arclist pid=$page_rs.id psize=9999 fields=id -->
+		<!-- loop from=$list.rslist key=$key value=$value id=$tmpid -->
+		<li><a href="{$value.url}" title="{$value.title}">{func phpok_cut $value.title 15 …}</a></li>
+		<!-- /loop -->
+	</ul>
+</div>

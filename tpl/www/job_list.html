@@ -1,0 +1,40 @@
+<!-- include tpl=head title=$title menutitle=$page_rs.title -->
+<div class="banner"{if $page_rs.banner} style="background-image:url('{$page_rs.banner.gd.auto}')"{/if}></div>
+<div class="main clearfix">
+	<div class="left">
+		<div class="pfw">
+			<div class="title"><h3>{$page_rs.title}</h3></div>
+			<ul class="artlist">
+				<!-- sublist pid=$page_rs.id -->
+				<!-- loop from=$list key=$key value=$value id=$tmpid -->
+				<li><a href="{$value.url}" title="{$value.title}">{$value.title}</a></li>
+				<!-- /loop -->
+				<li class="current"><a href="{$page_rs.url}" title="{$page_rs.title}">{$page_rs.title}</a></li>
+			</ul>
+		</div>
+		<!-- include tpl=block_contact -->
+	</div>
+	<div class="right">
+		<!-- loop from=$rslist key=$key value=$value -->
+		<div class="pfw">
+			<div class="title">
+				<h3><a href="{$value.url}" title="{$value.title}">岗位：{$value.title}</a></h3>
+			</div>
+			<ul class="joblist clearfix">
+				<li>薪资范围：{$value.price}</li>
+				<li>招聘人数：{$value.persons}</li>
+				<li>工作年限：{$value.years}</li>
+				<li>学历：{$value.schools}</li>
+				<li>工作地点：{$value.address}</li>
+				<li>发布时间：{func time_format $value.dateline}</li>
+				<li>查看次数：{$value.hits}</li>
+				<li><input type="button" value="查看明细" onclick="$.phpok.go('{$value.url}')" class="button blue" /></li>
+			</ul>
+		</div>
+		<!-- /loop -->
+		<!-- include tpl=block_pagelist -->
+	</div>
+</div>
+
+
+<!-- include tpl=foot -->
